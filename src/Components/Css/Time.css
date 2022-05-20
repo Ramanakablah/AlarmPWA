@@ -1,0 +1,48 @@
+.Clock{
+    display: flex;
+}
+
+.sep{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 2px 7px;
+}
+
+.seprators{
+    background-color: white;
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+}
+
+.time{
+    border: solid 2px white;
+    border-radius: 6px;
+    margin: 3px 5px ;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 4px;
+    color: white;
+    font-size: 3.5rem;
+    font-weight: 700;
+    position: relative;
+}
+.timewrappers{
+    overflow: hidden;
+}
+.scroll{
+    animation-name: scrolltime;
+    animation-duration: 2.5s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+}
+
+@keyframes scrolltime{
+    50%{
+        transform:translateX(-150%)
+    }
+    100%{
+        transform:translateX(0%)
+    }
+}
+

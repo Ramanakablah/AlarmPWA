@@ -6,84 +6,64 @@ import "../Css/Morning.css"
 import Time from "./Time"
 import Alarm from "./Alarm"
 import sun from "../New folder/Sun.png"
+const audio = new Audio("../New folder/Narayan.mp3")
 
 const Morning = () => {
 
   const [showalarm, setshowalarm] = useState(false);
   const [offalarm, setoffalarm] = useState(false);
   const [istherealarm, setistherealarm] = useState(false);
-  
-  // const sliderball= document.getElementById("balls")
-  // const sliderballholder= document.getElementById("ballholder")
-  
-  // const move=()=>{
-    //   if(!ballpos){
-      //     sliderball.style.left= 60 + "%"
-      //     sliderballholder.style.backgroundColor= "blue"
-      //     setballpos(true)
-      //   }
-      //   if(ballpos){
-        //     sliderball.style.left= 0 + "%"
-        //     sliderballholder.style.backgroundColor= "grey"
-        //     setballpos(false)
-        //   }
-        // }
-        
-        const alarmsetter=()=>{
-          if(istherealarm){
-            setistherealarm(false)
-          }
-          if(!istherealarm){
-            setistherealarm(true)
-          }
-        }
-        
-        const showalarmfunc = () => {
-          if (showalarm) {
-      setshowalarm(false)
-    }
-    if (!showalarm) {
-      setshowalarm(true)
-    }
+
+
+  const alarmsetter = () => {
+    istherealarm?setistherealarm(false):setistherealarm(true)
   }
-  
+
+
+  const showalarmfunc = () => {
+    showalarm?setshowalarm(false): setshowalarm(true);
+  }
+
   const terminatealarm = () => {
     sessionStorage.removeItem("Ahourfixed")
     sessionStorage.removeItem("Aminfixed")
     alarmsetter()
   }
-  
+
   const [bajao, { stop }] = useSound(Narayan, {
     interrupt: true,
     loop: true
   })
-  
+
   const halt = () => {
-    stop();
+    audio.pause()
+    // stop();
     alarmoff();
   }
-  
+  console.log(audio);
   const alarmoff = () => {
+    console.log(audio);
     if (offalarm) {
       setoffalarm(false)
     }
     if (!offalarm) {
-      const audictx = new AudioContext();
-      audictx.resume();
-      stop()
-      bajao()
+    audio.play()  
+      // const audictx = new AudioContext();
+      // audictx.resume();
+      // stop()
+      // bajao()
       setoffalarm(true)
     }
   }
 
-const pushnotify=()=>{
-  Notification.requestPermission(
-    function(status){
-      console.log("Notification permission status" , status)
-    }
+  const pushnotify = () => {
+    Notification.requestPermission(
+      function (status) {
+        console.log("Notification permission status", status)
+      }
     );
   }
-    
+
   setInterval(() => {
     const t = new Date();
     const Bar = document.getElementById("secondbar")
@@ -96,11 +76,11 @@ const pushnotify=()=>{
     <div className="barholder">
       <div className="seconds" id='secondbar'></div>
     </div>
-    {offalarm ? <button className='btn danger' onClick={halt}> Stop alarm </button> : !showalarm && (!istherealarm || !sessionStorage.Ahourfixed) &&  <button className='btn primary-blur' onClick={showalarmfunc}> Set Alarm</button>}
-    {showalarm && <Alarm visible={showalarmfunc} trigger={alarmoff} confirmalarm={alarmsetter}/>}
+    {offalarm ? <button className='btn danger' onClick={halt}> Stop alarm </button> : !showalarm && (!istherealarm || !sessionStorage.Ahourfixed) && <button className='btn primary-blur' onClick={showalarmfunc}> Set Alarm</button>}
+    {showalarm && <Alarm visible={showalarmfunc} trigger={alarmoff} confirmalarm={alarmsetter} />}
 
-    {(istherealarm || sessionStorage.Ahourfixed) ?<div className='head'>Alarm set for :</div> : <div className='head'>No Alarm is set </div>}
-   {(istherealarm || sessionStorage.Ahourfixed) && <div className="alarminfo">
+    {(istherealarm || sessionStorage.Ahourfixed) ? <div className='head'>Alarm set for :</div> : <div className='head'>No Alarm is set </div>}
+    {(istherealarm || sessionStorage.Ahourfixed) && <div className="alarminfo">
       <div className="alarmtime">
         {Number(JSON.parse(sessionStorage.Ahourfixed))}
         <span>:</span>
@@ -114,7 +94,7 @@ const pushnotify=()=>{
       </div> */}
     </div>
 
-}
+    }
     {/* <button className='btn danger'>Notify</button> */}
   </div>;
 };

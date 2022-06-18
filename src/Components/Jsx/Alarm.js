@@ -9,11 +9,15 @@ const Alarm = (props) => {
 
     setInterval(() => {
         let time = new Date();
+        console.log(time);
         if (sessionStorage.Ahourfixed) {
-            if (time.getHours() === ((Number(JSON.parse(sessionStorage.Ahourfixed)))+23)%24) {
+            if (time.getHours() === ((Number(JSON.parse(sessionStorage.Ahourfixed))))) {
                 if (time.getMinutes() === ((Number(JSON.parse(sessionStorage.Aminfixed))) + 59) % 60) {
                     if (time.getSeconds() === 59) {
+                        console.log('trigger');
                         props.trigger()
+                        // let audio = new Audio("../New folder/Narayan.mp3")
+                        // audio.play()
                     }
                 }
             }
